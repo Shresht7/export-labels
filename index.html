@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <script type="module" src="script.js"></script>
+
+    <title>Labels</title>
+  </head>
+
+  <body>
+    <header></header>
+
+    <main>
+      <form id="form">
+        <div>
+          <input id="user" placeholder="username" />
+          <span>/</span>
+          <input id="repo" placeholder="repository" />
+        </div>
+        <div>
+          <button type="submit">Import</button>
+          <button type="reset">Clear</button>
+        </div>
+      </form>
+
+      <ul id="labels"></ul>
+
+      <section id="output">
+        <pre id="output-content"></pre>
+        <button id="copy-to-clipboard">Copy</button>
+      </section>
+
+      <button id="export">Export</button>
+    </main>
+
+    <footer></footer>
+  </body>
+</html>

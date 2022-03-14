@@ -1,0 +1,131 @@
+/* ========= */
+/* NORMALIZE */
+/* ========= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* ======= */
+/* GENERAL */
+/* ======= */
+
+html,
+body {
+  width: 100vw;
+  margin: 0 auto;
+}
+
+body {
+  width: min(85vw, 960px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 14px;
+}
+
+button {
+  padding: 0.25rem 0.5rem;
+}
+
+/* ================ */
+/* USER PREFERENCES */
+/* ================ */
+
+/* Remove animations for people who've turned them off */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ====== */
+/* HEADER */
+/* ====== */
+
+header {
+  margin: 1rem 0;
+}
+
+/* ==== */
+/* MAIN */
+/* ==== */
+
+main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+/* ---- */
+/* FORM */
+/* ---- */
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+input {
+  padding: 0.25rem 0.5rem;
+}
+
+/* ------- */
+/* SECTION */
+/* ------- */
+
+#output {
+  width: 100%;
+  color: #ccc;
+  background-color: #333;
+  padding: 1rem 2rem;
+  border-radius: 20px;
+  position: relative;
+}
+
+#copy-to-clipboard {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+}
+
+/* ====== */
+/* FOOTER */
+/* ====== */
