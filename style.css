@@ -115,7 +115,7 @@ input {
 #labels {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 3fr 5fr;
   margin: 2rem 0rem;
   position: relative;
 }
@@ -137,6 +137,7 @@ input {
   grid-column: 2 / 3;
   color: #ccc;
   background-color: #333;
+  border-radius: 20px;
 }
 
 .label-name-container {
@@ -162,6 +163,10 @@ input {
   position: absolute;
   top: 1rem;
   right: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ====== */

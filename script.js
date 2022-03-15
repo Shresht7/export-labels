@@ -78,11 +78,15 @@ function updateLabelsList() {
 // ====
 
 /** HTMLButtonElement */
-const copyButton = document.getElementById("copy-to-clipboard");
+const copyYAMLButton = document.getElementById("copy-yaml");
+const copyJSONButton = document.getElementById("copy-json");
 
-function onCopy() {
-  const text = jsYaml.dump(labels)
+function onCopy(type) {
+  const text = type === 'yaml'
+    ? jsYaml.dump(labels)
+    : JSON.stringify(labels, null, 2)
   navigator.clipboard.writeText(text)
 }
 
-copyButton.addEventListener("click", onCopy);
+copyYAMLButton.addEventListener("click", () => onCopy('yaml'));
+copyJSONButton.addEventListener("click", () => onCopy('json'));
