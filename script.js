@@ -1,3 +1,6 @@
+//  Library
+import jsYaml from 'https://cdn.skypack.dev/js-yaml';
+
 //  =======
 //  ON LOAD
 //  =======
@@ -54,7 +57,8 @@ function updateLabelsList() {
     li.style.color = `#${label.color}`;
     labelsList.appendChild(li);
   }
-  outputElement.innerText = JSON.stringify(labels, null, 2);
+  outputElement.innerText = jsYaml.dump(labels)
+  // outputElement.innerText = JSON.stringify(labels, null, 2);
 }
 
 // ======
@@ -71,7 +75,9 @@ const outputElement = document.getElementById("output-content");
 const copyButton = document.getElementById("copy-to-clipboard");
 
 function onCopy() {
-  navigator.clipboard.writeText(JSON.stringify(labels, null, 2))
+  const text = jsYaml.dumps(labels)
+  // const text = JSON.stringify(labels, null, 2)
+  navigator.clipboard.writeText(text)
 }
 
 copyButton.addEventListener("click", onCopy);
