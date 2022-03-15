@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   labels = await fetch("./data.json").then((res) => res.json());
   labels = labels.map(({ name, color, description }) => ({
     name,
-    color,
+    color: `#${color}`,
     description
   }));
   updateLabelsList();
@@ -33,7 +33,7 @@ async function handleSubmit(event) {
   ).then((res) => res.json());
   labels = labels.map(({ name, color, description }) => ({
     name,
-    color,
+    color: `#${color}`,
     description
   }));
   updateLabelsList();
@@ -46,25 +46,30 @@ formElement.addEventListener("submit", handleSubmit);
 //  ===========
 
 /** @type HTMLUListElement */
-const labelsList = document.getElementById("labels");
+const labelNames = document.getElementById("label-names");
+const labelConfigs = document.getElementById("label-configs");
 
 let labels = [];
 
 function updateLabelsList() {
   for (const label in labels) {
     const labelItem = document.createElement("div");
+    const labelConfig = document.createElement('div');
     labelItem.innerHTML = `
-      <div class='label-name-container'>
-          <div class='label-name' style='color: #${labels[label].color};'>
-            ${labels[label].name}
-          </div>
+    <div class='label-name-container' style='--clr: ${labels[label].color};'>
+      <div class='label-name'>
+        ${labels[label].name}
       </div>
-      <div class='label-config'>
-        <pre>${jsYaml.dump([labels[label]]).trim()}</pre>
+    </div>
+    `
+    labelConfig.innerHTML = `
+      <div class='label-config-container'>
+        <pre>${jsYaml.dump([labels[label]])}</pre>
       </div>
     `
-    labelItem.classList.add('label-item');
-    labelsList.appendChild(labelItem);
+    labelConfig.classList.add('label-config')
+    labelNames.appendChild(labelItem)
+    labelConfigs.appendChild(labelConfig)
   }
 }
 

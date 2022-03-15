@@ -114,31 +114,48 @@ input {
 
 #labels {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
   margin: 2rem 0rem;
   position: relative;
 }
 
-.label-item {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 3fr;
+#label-names, #label-configs {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 2rem 0;
+}
+
+#label-names {
+  grid-column: 1 / 2;
+  align-items: center;
+}
+
+#label-configs {
+  grid-column: 2 / 3;
+  color: #ccc;
+  background-color: #333;
 }
 
 .label-name-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.label-config {
+.label-name-container, .label-config-container {
   padding: 1rem 2rem;
-  color: #ccc;
-  background-color: #333;
+  height: 15ch;
+}
+
+.label-name {
+  color: var(--clr);
+  border: 1px solid var(--clr);
+  border-radius: 2ch;
+  padding: 0.25rem 0.5rem;
 }
 
 #copy-to-clipboard {
