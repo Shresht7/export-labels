@@ -54,12 +54,10 @@ function updateLabelsList() {
   for (const label in labels) {
     const labelItem = document.createElement("div");
     labelItem.innerHTML = `
-      <div>
-        <div>
+      <div class='label-name-container'>
           <div class='label-name' style='color: #${labels[label].color};'>
             ${labels[label].name}
           </div>
-        </div>
       </div>
       <div class='label-config'>
         <pre>${jsYaml.dump([labels[label]]).trim()}</pre>
