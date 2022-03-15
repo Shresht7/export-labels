@@ -76,8 +76,7 @@ function updateLabelsList() {
 const copyButton = document.getElementById("copy-to-clipboard");
 
 function onCopy() {
-  const text = jsYaml.dumps(labels)
-  // const text = JSON.stringify(labels, null, 2)
+  const text = jsYaml.dump(labels)
   navigator.clipboard.writeText(text)
 }
 

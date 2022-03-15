@@ -74,7 +74,7 @@ button {
 /* HEADER */
 /* ====== */
 
-header {
+header, footer {
   margin: 1rem 0;
 }
 
