@@ -51,21 +51,24 @@ const labelsList = document.getElementById("labels");
 let labels = [];
 
 function updateLabelsList() {
-  for (const label of labels) {
-    const li = document.createElement("li");
-    li.innerText = label.name + ": " + label.description;
-    li.style.color = `#${label.color}`;
-    labelsList.appendChild(li);
+  for (const label in labels) {
+    const labelItem = document.createElement("div");
+    labelItem.innerHTML = `
+      <div>
+        <div>
+          <div class='label-name' style='color: #${labels[label].color};'>
+            ${labels[label].name}
+          </div>
+        </div>
+      </div>
+      <div class='label-config'>
+        <pre>${jsYaml.dump([labels[label]]).trim()}</pre>
+      </div>
+    `
+    labelItem.classList.add('label-item');
+    labelsList.appendChild(labelItem);
   }
-  outputElement.innerText = jsYaml.dump(labels)
-  // outputElement.innerText = JSON.stringify(labels, null, 2);
 }
-
-// ======
-// OUTPUT
-// ======
-
-const outputElement = document.getElementById("output-content");
 
 // ====
 // COPY
