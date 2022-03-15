@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <link rel="stylesheet" href="style.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <script type="module" src="script.js"></script>
+  <link rel="stylesheet" href="style.css" />
 
-    <title>Labels</title>
-  </head>
+  <script type="module" src="script.js"></script>
 
-  <body>
-    <header></header>
+  <title>Labels</title>
+</head>
 
-    <main>
-      <form id="form">
-        <div>
-          <input id="user" placeholder="username" />
-          <span>/</span>
-          <input id="repo" placeholder="repository" />
-        </div>
-        <div>
-          <button type="submit">Import</button>
-          <button type="reset">Clear</button>
-        </div>
-      </form>
+<body>
+  <header></header>
 
-      <ul id="labels"></ul>
+  <main>
+    <form id="form">
+      <div>
+        <input id="user" placeholder="username" />
+        <span>/</span>
+        <input id="repo" placeholder="repository" />
+      </div>
+      <div>
+        <button type="submit">Import</button>
+        <button type="reset">Clear</button>
+      </div>
+    </form>
 
-      <section id="output">
-        <pre id="output-content"></pre>
-        <button id="copy-to-clipboard">Copy</button>
-      </section>
+    <ul id="labels"></ul>
 
-      <button id="export">Export</button>
-    </main>
+    <section id="output">
+      <pre id="output-content"></pre>
+      <button id="copy-to-clipboard">Copy</button>
+    </section>
+  </main>
 
-    <footer></footer>
-  </body>
+  <footer></footer>
+</body>
+
 </html>

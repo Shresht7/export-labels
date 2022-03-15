@@ -63,15 +63,15 @@ function updateLabelsList() {
 
 const outputElement = document.getElementById("output-content");
 
-// ======
-// EXPORT
-// ======
+// ====
+// COPY
+// ====
 
 /** HTMLButtonElement */
-const exportButton = document.getElementById("export");
+const copyButton = document.getElementById("copy-to-clipboard");
 
-function onExport() {
-  console.log(labels);
+function onCopy() {
+  navigator.clipboard.writeText(JSON.stringify(labels, null, 2))
 }
 
-exportButton.addEventListener("click", onExport);
+copyButton.addEventListener("click", onCopy);
