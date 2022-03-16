@@ -35,8 +35,12 @@ select {
 :root {
   --clr-background: #ccc;
   --clr-foreground: #333;
+  --clr-gradient-1: rgba(131,58,180,1);
+  --clr-gradient-2: rgba(253,29,29,1);
+  --clr-gradient-3: rgba(252,176,69,1);
   --clr-shadow: rgba(0, 0, 0, 0.33);
   --sdw-background: 0 0 5px 5px var(--clr-shadow);
+  --grd-background: linear-gradient(90deg, var(--clr-gradient-1) 0%, var(--clr-gradient-2) 50%, var(--clr-gradient-3) 100%);
 }
 
 /* ======= */
@@ -101,11 +105,11 @@ header::before {
   width: 125vw;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  background: rgb(131,58,180);
-  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+  background: var(--clr-gradient-1);
+  background: var(--grd-background);
   opacity: 0.67;
   z-index: -1;
-  box-shadow: var(--sdw-background);
+  box-shadow: inset var(--sdw-background);
   animation: spin 10s forwards infinite;
 }
 
