@@ -28,6 +28,17 @@ select {
   font: inherit;
 }
 
+/* ========= */
+/* VARIABLES */
+/* ========= */
+
+:root {
+  --clr-background: #ccc;
+  --clr-foreground: #333;
+  --clr-shadow: rgba(0, 0, 0, 0.33);
+  --sdw-background: 0 0 5px 5px var(--clr-shadow);
+}
+
 /* ======= */
 /* GENERAL */
 /* ======= */
@@ -117,6 +128,7 @@ input {
   display: grid;
   grid-template-columns: 3fr 5fr;
   margin: 2rem 0rem;
+  padding: 0 1rem;
   position: relative;
 }
 
@@ -135,9 +147,10 @@ input {
 
 #label-configs {
   grid-column: 2 / 3;
-  color: #ccc;
-  background-color: #333;
+  color: var(--clr-background);
+  background-color: var(--clr-foreground);
   border-radius: 20px;
+  box-shadow: var(--sdw-background);
 }
 
 .label-name-container {
@@ -162,12 +175,12 @@ input {
 #copy-to-clipboard {
   position: absolute;
   top: 1rem;
-  right: 1.5rem;
+  right: 2.25rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  color: #ccc;
+  color: var(--clr-background);
   gap: 1rem;
 }
 
