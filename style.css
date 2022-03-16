@@ -106,6 +106,16 @@ header::before {
   opacity: 0.67;
   z-index: -1;
   box-shadow: var(--sdw-background);
+  animation: spin 10s forwards infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: translate(-50%, -94.5%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -94.5%) rotate(360deg);
+  }
 }
 
 /* ==== */
