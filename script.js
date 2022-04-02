@@ -21,9 +21,24 @@ const formElement = document.getElementById('form')
 const userInput = document.getElementById('user')
 /** @type HTMLInputElement */
 const repoInput = document.getElementById('repo')
+/** @type HTMLParagraphElement */
+const errorBox = document.getElementById('error-box')
+
+/** Shows error on the form-input */
+function showFormError(msg) {
+  errorBox.innerText = msg
+  errorBox.style.transform = msg
+    ? 'translateY(0)'
+    : 'translateY(-50%)'
+}
 
 async function handleSubmit(event) {
   event.preventDefault()
+  if (!userInput.value || !repoInput.value) {
+    showFormError('Please provide the username and repository information')
+    return
+  }
+  showFormError('')
   const data = await fetch(
     `https://api.github.com/repos/${userInput.value}/${repoInput.value}/labels`
   ).then((res) => res.json())
@@ -32,6 +47,7 @@ async function handleSubmit(event) {
 }
 
 formElement.addEventListener('submit', handleSubmit)
+formElement.addEventListener('reset', () => showFormError(''))
 
 //  ===========
 // LABELS STATE
