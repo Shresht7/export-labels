@@ -35,9 +35,9 @@ select {
 :root {
   --clr-background: #ccc;
   --clr-foreground: #333;
-  --clr-gradient-1: rgba(131,58,180,1);
-  --clr-gradient-2: rgba(253,29,29,1);
-  --clr-gradient-3: rgba(252,176,69,1);
+  --clr-gradient-1: rgba(131, 58, 180, 1);
+  --clr-gradient-2: rgba(253, 29, 29, 1);
+  --clr-gradient-3: rgba(252, 176, 69, 1);
   --clr-shadow: rgba(0, 0, 0, 0.33);
   --sdw-background: 0 0 5px 5px var(--clr-shadow);
   --grd-background: linear-gradient(90deg, var(--clr-gradient-1) 0%, var(--clr-gradient-2) 50%, var(--clr-gradient-3) 100%);
@@ -75,6 +75,7 @@ button {
 
 /* Remove animations for people who've turned them off */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -90,7 +91,7 @@ button {
 /* ====== */
 
 header {
-  font-size: 3rem;
+  font-size: 3vw;
   position: relative;
   margin: 1rem 0 4rem 0;
   color: whitesmoke;
@@ -117,6 +118,7 @@ header::before {
   from {
     transform: translate(-50%, -94.5%) rotate(0deg);
   }
+
   to {
     transform: translate(-50%, -94.5%) rotate(360deg);
   }
@@ -166,7 +168,8 @@ input {
   position: relative;
 }
 
-#label-names, #label-configs {
+#label-names,
+#label-configs {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -194,7 +197,8 @@ input {
   align-items: center;
 }
 
-.label-name-container, .label-config-container {
+.label-name-container,
+.label-config-container {
   padding: 1rem 2rem;
   height: 15ch;
 }
