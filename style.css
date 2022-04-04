@@ -33,14 +33,24 @@ select {
 /* ========= */
 
 :root {
-  --clr-background: #ccc;
-  --clr-foreground: #333;
+  --clr-light-1: whitesmoke;
+  --clr-light-2: #ccc;
+  --clr-dark-1: #22272e;
+  --clr-dark-2: #333;
+
+  --clr-background: var(--clr-light-1);
+  --clr-foreground: var(--clr-dark-2);
   --clr-gradient-1: rgba(131, 58, 180, 1);
   --clr-gradient-2: rgba(253, 29, 29, 1);
   --clr-gradient-3: rgba(252, 176, 69, 1);
   --clr-shadow: rgba(0, 0, 0, 0.33);
   --sdw-background: 0 0 5px 5px var(--clr-shadow);
   --grd-background: linear-gradient(90deg, var(--clr-gradient-1) 0%, var(--clr-gradient-2) 50%, var(--clr-gradient-3) 100%);
+}
+
+.dark {
+  --clr-background: var(--clr-dark-1);
+  --clr-foreground: var(--clr-light-1);
 }
 
 /* ======= */
@@ -63,6 +73,11 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   font-size: 14px;
+}
+
+body.dark {
+  background-color: var(--clr-background);
+  color: var(--clr-foreground);
 }
 
 button {
@@ -91,7 +106,7 @@ button {
 /* ======= */
 
 .error {
-  color: red;
+  color: var(--clr-gradient-2);
 }
 
 .loading {
@@ -107,8 +122,8 @@ button {
   width: 5rem;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  border-top: 1px solid black;
-  border-left: 1px solid black;
+  border-top: 1px solid var(--clr-foreground);
+  border-left: 1px solid var(--clr-foreground);
   animation: spin 1s infinite forwards;
 }
 
@@ -132,7 +147,7 @@ header {
   font-size: 3vw;
   position: relative;
   margin: 1rem 0 4rem 0;
-  color: whitesmoke;
+  color: var(--clr-light-1);
 }
 
 header::before {
@@ -228,8 +243,8 @@ input {
 
 #label-configs {
   grid-column: 2 / 3;
-  color: var(--clr-background);
-  background-color: var(--clr-foreground);
+  color: var(--clr-light-1);
+  background-color: var(--clr-dark-2);
   border-radius: 20px;
   box-shadow: var(--sdw-background);
 }
@@ -300,7 +315,8 @@ input {
   position: absolute;
   right: 1rem;
   top: 1rem;
-  border: 1px solid black;
+  background-color: var(--clr-foreground);
+  border: 1px solid var(--clr-foreground);
   padding: 0.5rem;
   border-radius: 4px;
   cursor: pointer;

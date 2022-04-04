@@ -180,7 +180,7 @@ toggleThemeButton.addEventListener('click', () => {
     for (const label of labels) {
       label.classList.add('dark')
     }
-    document.body.style.backgroundColor = 'var(--clr-foreground)'
+    document.body.classList.add('dark')
   } else {
     toggleThemeButton.setAttribute('data-theme', 'light')
     toggleThemeButton.innerText = '🌙'
@@ -188,6 +188,6 @@ toggleThemeButton.addEventListener('click', () => {
     for (const label of labels) {
       label.classList.remove('dark')
     }
-    document.body.style.backgroundColor = 'var(--clr-text)'
+    document.body.classList.remove('dark')
   }
 })
