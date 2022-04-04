@@ -22,12 +22,12 @@ const userInput = document.getElementById('user')
 /** @type HTMLInputElement */
 const repoInput = document.getElementById('repo')
 /** @type HTMLParagraphElement */
-const errorBox = document.getElementById('error-box')
+const formError = document.getElementById('error')
 
 /** Shows error on the form-input */
 function showFormError(msg) {
-  errorBox.innerText = msg
-  errorBox.style.transform = msg
+  formError.innerText = msg
+  formError.style.transform = msg
     ? 'translateY(0)'
     : 'translateY(-50%)'
 }
