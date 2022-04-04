@@ -267,7 +267,7 @@ input {
   --lightness-switch: max(0, min(calc((var(--perceived-lightness) - var(--lightness-threshold)) * -1000), 1));
   border: 1px solid transparent;
   border-radius: 2em;
-  padding: 0.25rem 0.5rem;
+  padding: 0.33rem 0.75rem;
 }
 
 .label-name {
@@ -303,7 +303,7 @@ input {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  color: var(--clr-background);
+  color: var(--clr-light-1);
   gap: 1rem;
 }
 
