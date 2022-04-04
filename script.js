@@ -151,12 +151,13 @@ function updateLabelsList() {
 // ====
 
 /** onCopy Button Click Handler */
-function onCopy(type) {
+function onCopy(e, type) {
   const text = type === 'yaml'
     ? jsYaml.dump(labels)
     : JSON.stringify(labels, null, 2)
   navigator.clipboard.writeText(text)
+  document.getElementById('copy-to-clipboard').innerText = `Copied as ${type.toUpperCase()} ✅`
 }
 
-copyYAMLButton.addEventListener('click', () => onCopy('yaml'))
-copyJSONButton.addEventListener('click', () => onCopy('json'))
+copyYAMLButton.addEventListener('click', (e) => onCopy(e, 'yaml'))
+copyJSONButton.addEventListener('click', (e) => onCopy(e, 'json'))

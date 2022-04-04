@@ -254,6 +254,10 @@ input {
   padding: 0.25rem 0.5rem;
 }
 
+/* ================= */
+/* COPY-TO-CLIPBOARD */
+/* ================= */
+
 #copy-to-clipboard {
   position: absolute;
   top: 1rem;
