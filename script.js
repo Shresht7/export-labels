@@ -1,5 +1,6 @@
 //  Library
 import jsYaml from 'https://cdn.skypack.dev/js-yaml'
+import color from 'https://cdn.skypack.dev/color'
 
 //  ============
 //  DOM ELEMENTS
@@ -123,11 +124,12 @@ function formatLabels(data) {
 /** Update Labels List Element */
 function updateLabelsList() {
   for (const label in labels) {
-
     const labelItem = document.createElement('div')
+    const [r, g, b] = color(labels[label].color).rgb().array()
+    const [h, s, l] = color(labels[label].color).hsl().array()
     labelItem.innerHTML = `
-    <div class='label-name-container' style='--clr: ${labels[label].color};'>
-    <div class='label-name'>
+    <div class='label-name-container'>
+    <div class='label-name' style='--label-r: ${r}; --label-g: ${g}; --label-b: ${b}; --label-h: ${h}; --label-s: ${s}; --label-l: ${l};'>
     ${labels[label].name}
     </div>
     </div>
