@@ -1,6 +1,39 @@
 //  Library
 import jsYaml from 'https://cdn.skypack.dev/js-yaml'
 
+//  ============
+//  DOM ELEMENTS
+//  ============
+
+//  FORM
+//  ====
+
+/** @type HTMLFormElement */
+const formElement = document.getElementById('form')
+/** @type HTMLInputElement */
+const userInput = document.getElementById('user')
+/** @type HTMLInputElement */
+const repoInput = document.getElementById('repo')
+/** @type HTMLParagraphElement */
+const formError = document.getElementById('error')
+
+//  LABELS
+//  ======
+
+/** @type HTMLDivElement */
+const labelNames = document.getElementById('label-names')
+/** @type HTMLDivElement */
+const labelConfigs = document.getElementById('label-configs')
+
+//  COPY
+//  ====
+
+/** @type HTMLButtonElement */
+const copyYAMLButton = document.getElementById('copy-yaml')
+/** @type HTMLButtonElement */
+const copyJSONButton = document.getElementById('copy-json')
+
+
 //  =======
 //  ON LOAD
 //  =======
@@ -15,15 +48,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 //  FORM
 //  ====
 
-/** @type HTMLFormElement */
-const formElement = document.getElementById('form')
-/** @type HTMLInputElement */
-const userInput = document.getElementById('user')
-/** @type HTMLInputElement */
-const repoInput = document.getElementById('repo')
-/** @type HTMLParagraphElement */
-const formError = document.getElementById('error')
-
 /** Shows error on the form-input */
 function showFormError(msg) {
   formError.innerText = msg
@@ -32,6 +56,7 @@ function showFormError(msg) {
     : 'translateY(-50%)'
 }
 
+/** Handle form submit error */
 async function handleSubmit(event) {
   event.preventDefault()
   if (!userInput.value || !repoInput.value) {
@@ -53,13 +78,9 @@ formElement.addEventListener('reset', () => showFormError(''))
 // LABELS STATE
 //  ===========
 
-/** @type HTMLDivElement */
-const labelNames = document.getElementById('label-names')
-/** @type HTMLDivElement */
-const labelConfigs = document.getElementById('label-configs')
-
 let labels = []
 
+/** Format incoming label data */
 function formatLabels(data) {
   return data.map(({ name, color, description }) => ({
     name,
@@ -68,6 +89,7 @@ function formatLabels(data) {
   }))
 }
 
+/** Update Labels List Element */
 function updateLabelsList() {
   for (const label in labels) {
 
@@ -97,11 +119,7 @@ function updateLabelsList() {
 // COPY
 // ====
 
-/** @type HTMLButtonElement */
-const copyYAMLButton = document.getElementById('copy-yaml')
-/** @type HTMLButtonElement */
-const copyJSONButton = document.getElementById('copy-json')
-
+/** onCopy Button Click Handler */
 function onCopy(type) {
   const text = type === 'yaml'
     ? jsYaml.dump(labels)
