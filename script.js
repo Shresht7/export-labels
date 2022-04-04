@@ -34,13 +34,25 @@ const copyYAMLButton = document.getElementById('copy-yaml')
 const copyJSONButton = document.getElementById('copy-json')
 
 
+//  ================
+//  HELPER FUNCTIONS
+//  ================
+
+/** Fetch and format label data */
+async function fetchLabels(src) {
+  const labels = await fetch(src)
+    .then(res => res.json())
+    .then(data => formatLabels(data))
+    .catch(err => console.error(err))
+  return labels
+}
+
 //  =======
 //  ON LOAD
 //  =======
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const data = await fetch('./data.json').then((res) => res.json())
-  labels = formatLabels(data)
+  labels = await fetchLabels('./data.json')
   updateLabelsList()
 })
 
@@ -64,10 +76,7 @@ async function handleSubmit(event) {
     return
   }
   showFormError('')
-  const data = await fetch(
-    `https://api.github.com/repos/${userInput.value}/${repoInput.value}/labels`
-  ).then((res) => res.json())
-  labels = formatLabels(data)
+  labels = await fetchLabels(`https://api.github.com/repos/${userInput.value}/${repoInput.value}/labels`)
   updateLabelsList()
 }
 
