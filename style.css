@@ -292,6 +292,20 @@ input {
   gap: 1rem;
 }
 
+/* ============ */
+/* THEME TOGGLE */
+/* ============ */
+
+#theme-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  border: 1px solid black;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 /* ====== */
 /* FOOTER */
 /* ====== */

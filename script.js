@@ -163,3 +163,31 @@ function onCopy(e, type) {
 
 copyYAMLButton.addEventListener('click', (e) => onCopy(e, 'yaml'))
 copyJSONButton.addEventListener('click', (e) => onCopy(e, 'json'))
+
+//  ============
+//  THEME TOGGLE
+//  ============
+
+/** @type HTMLButtonElement */
+const toggleThemeButton = document.getElementById('theme-toggle')
+
+toggleThemeButton.addEventListener('click', () => {
+  const theme = toggleThemeButton.getAttribute('data-theme')
+  if (theme === 'light') {
+    toggleThemeButton.setAttribute('data-theme', 'dark')
+    toggleThemeButton.innerText = '🌙'
+    const labels = document.querySelectorAll('.label-name')
+    for (const label of labels) {
+      label.classList.add('dark')
+    }
+    document.body.style.backgroundColor = 'var(--clr-foreground)'
+  } else {
+    toggleThemeButton.setAttribute('data-theme', 'light')
+    toggleThemeButton.innerText = '☀'
+    const labels = document.querySelectorAll('.label-name')
+    for (const label of labels) {
+      label.classList.remove('dark')
+    }
+    document.body.style.backgroundColor = 'var(--clr-background)'
+  }
+})
