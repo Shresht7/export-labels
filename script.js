@@ -175,7 +175,7 @@ toggleThemeButton.addEventListener('click', () => {
   const theme = toggleThemeButton.getAttribute('data-theme')
   if (theme === 'light') {
     toggleThemeButton.setAttribute('data-theme', 'dark')
-    toggleThemeButton.innerText = '🌙'
+    toggleThemeButton.innerText = '☀'
     const labels = document.querySelectorAll('.label-name')
     for (const label of labels) {
       label.classList.add('dark')
@@ -183,11 +183,11 @@ toggleThemeButton.addEventListener('click', () => {
     document.body.style.backgroundColor = 'var(--clr-foreground)'
   } else {
     toggleThemeButton.setAttribute('data-theme', 'light')
-    toggleThemeButton.innerText = '☀'
+    toggleThemeButton.innerText = '🌙'
     const labels = document.querySelectorAll('.label-name')
     for (const label of labels) {
       label.classList.remove('dark')
     }
-    document.body.style.backgroundColor = 'var(--clr-background)'
+    document.body.style.backgroundColor = 'var(--clr-text)'
   }
 })
