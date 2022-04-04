@@ -20,6 +20,8 @@ const formError = document.getElementById('error')
 //  LABELS
 //  ======
 
+/** @type HTMLSectionElement */
+const labelSection = document.getElementById('labels')
 /** @type HTMLDivElement */
 const labelNames = document.getElementById('label-names')
 /** @type HTMLDivElement */
@@ -33,10 +35,26 @@ const copyYAMLButton = document.getElementById('copy-yaml')
 /** @type HTMLButtonElement */
 const copyJSONButton = document.getElementById('copy-json')
 
+//  MISCELLANEOUS
+//  -------------
+
+/** @type HTMLSectionElement */
+const loadingSection = document.querySelector('.loading')
 
 //  ================
 //  HELPER FUNCTIONS
 //  ================
+
+/** Shows/hides the loading spinner */
+async function showLoading(state) {
+  if (state) {
+    labelSection.style.display = 'none'
+    loadingSection.style.display = 'grid'
+  } else {
+    labelSection.style.display = 'grid'
+    loadingSection.style.display = 'none'
+  }
+}
 
 /** Fetch and format label data */
 async function fetchLabels(src) {
@@ -52,8 +70,10 @@ async function fetchLabels(src) {
 //  =======
 
 document.addEventListener('DOMContentLoaded', async () => {
+  showLoading(true)
   labels = await fetchLabels('./data.json')
   updateLabelsList()
+  showLoading(false)
 })
 
 //  ====
@@ -71,6 +91,7 @@ function showFormError(msg) {
 /** Handle form submit error */
 async function handleSubmit(event) {
   event.preventDefault()
+  showLoading(true)
   if (!userInput.value || !repoInput.value) {
     showFormError('Please provide the username and repository information')
     return
@@ -78,6 +99,7 @@ async function handleSubmit(event) {
   showFormError('')
   labels = await fetchLabels(`https://api.github.com/repos/${userInput.value}/${repoInput.value}/labels`)
   updateLabelsList()
+  showLoading(false)
 }
 
 formElement.addEventListener('submit', handleSubmit)
