@@ -209,7 +209,7 @@ input {
   padding: 0.25rem 0.5rem;
 }
 
-#error {
+#form-error {
   transform: translateY(-50%);
   transition: transform 250ms;
 }

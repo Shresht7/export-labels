@@ -16,7 +16,7 @@ const userInput = document.getElementById('user')
 /** @type HTMLInputElement */
 const repoInput = document.getElementById('repo')
 /** @type HTMLParagraphElement */
-const formError = document.getElementById('error')
+const formError = document.getElementById('form-error')
 
 //  LABELS
 //  ======
