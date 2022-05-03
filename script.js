@@ -116,7 +116,7 @@ let labels = []
 function formatLabels(data) {
   return data.map(({ name, color, description }) => ({
     name,
-    color: `#${color}`,
+    color: color.startsWith('#') ? color : `#${color}`,
     description
   }))
 }
