@@ -344,3 +344,21 @@ footer {
   text-align: center;
   margin: 3rem 0;
 }
+
+footer a {
+  color: var(--clr-foreground);
+  text-decoration: none;
+  letter-spacing: 0.25ch;
+}
+
+footer a:hover {
+  color: var(--clr-gradient-1);
+  border-bottom: 2px solid var(--clr-gradient-1);
+  padding-bottom: 2px;
+}
+
+body.dark>footer a:hover {
+  color: var(--clr-gradient-3);
+  border-bottom: 2px solid var(--clr-gradient-3);
+  padding-bottom: 2px;
+}
