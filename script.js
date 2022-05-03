@@ -137,11 +137,13 @@ function updateLabelsList() {
     labelNames.appendChild(labelItem)
 
     const labelConfig = document.createElement('div')
-    labelConfig.innerHTML = `
+    let text = `
       <div class='label-config-container'>
         <pre>${jsYaml.dump([labels[label]])}</pre>
       </div>
     `
+    text = text.replace(/(\w+):(\s*.+)/gim, '<span class="yaml-key">$1</span>:<span class="yaml-value">$2</span>')
+    labelConfig.innerHTML = text
     labelConfig.classList.add('label-config')
     labelConfigs.appendChild(labelConfig)
 

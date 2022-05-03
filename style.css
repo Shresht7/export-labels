@@ -291,6 +291,18 @@ input {
   border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
 }
 
+/* =================== */
+/* SYNTAX HIGHLIGHTING */
+/* =================== */
+
+.yaml-key {
+  color: var(--clr-gradient-3);
+}
+
+.yaml-value {
+  color: var(--clr-light-1);
+}
+
 /* ================= */
 /* COPY-TO-CLIPBOARD */
 /* ================= */
