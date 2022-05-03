@@ -319,6 +319,19 @@ input {
   gap: 1rem;
 }
 
+#copy-to-clipboard>button {
+  color: var(--clr-light-2);
+  border: 2px solid var(--clr-dark-1);
+  border-radius: 2px;
+  background-color: transparent;
+  transition: all 250ms ease-in-out;
+}
+
+#copy-to-clipboard>button:hover {
+  color: var(--clr-light-1);
+  border: 2px solid var(--clr-light-1);
+}
+
 /* ============ */
 /* THEME TOGGLE */
 /* ============ */
