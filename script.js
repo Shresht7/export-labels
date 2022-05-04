@@ -126,21 +126,27 @@ function formatLabels(data) {
   }))
 }
 
+const addButton = document.createElement('button')
+addButton.innerText = "+"
+addButton.classList.add('code-button')
+addButton.classList.add('add-button')
+addButton.addEventListener('click', () => { addLabel() })
+
 /** Update Labels List Element */
 function updateLabelsList() {
 
   clearLabelsList()
 
-  for (const label in labels) {
+  for (const idx in labels) {
     const labelItem = document.createElement('div')
 
-    const [r, g, b] = color(labels[label].color).rgb().array()
-    const [h, s, l] = color(labels[label].color).hsl().array()
+    const [r, g, b] = color(labels[idx].color).rgb().array()
+    const [h, s, l] = color(labels[idx].color).hsl().array()
 
     labelItem.innerHTML = `
-    <div class='label-name-container'>
+    <div class='label-name-container' data-idx="${idx}">
     <div class='label-name' style='--label-r: ${r}; --label-g: ${g}; --label-b: ${b}; --label-h: ${h}; --label-s: ${s}; --label-l: ${l};'>
-    ${labels[label].name}
+    ${labels[idx].name}
     </div>
     </div>
     `
@@ -148,16 +154,61 @@ function updateLabelsList() {
 
     const labelConfig = document.createElement('div')
     let text = `
-      <div class='label-config-container'>
-        <pre>${jsYaml.dump([labels[label]])}</pre>
+      <div class='label-config-container' data-idx="${idx}">
+        <pre>${jsYaml.dump([labels[idx]])}</pre>
       </div>
     `
     text = text.replace(/(\w+):(\s*.+)/gim, '<span class="yaml-key">$1</span>:<span class="yaml-value">$2</span>')
     labelConfig.innerHTML = text
     labelConfig.classList.add('label-config')
+    labelConfig.contentEditable = true
+    labelConfig.addEventListener('blur', (e) => {
+      editLabel(idx, labelConfig.innerText)
+    })
     labelConfigs.appendChild(labelConfig)
-
   }
+  const btn = document.createElement('div')
+  btn.style.display = 'flex'
+  btn.style.width = '100%'
+  btn.style.justifyContent = 'center'
+  btn.style.alignItems = 'center'
+  btn.appendChild(addButton)
+  labelConfigs.appendChild(btn)
+}
+
+function addLabel() {
+  labels.push({
+    name: 'label',
+    color: '#000000',
+    description: 'A new label'
+  })
+  updateLabelsList()
+}
+
+function editLabel(idx, content) {
+  let newLabel = []
+
+  if (!content) {
+    removeLabel(idx)
+    return
+  }
+
+  try {
+    newLabel = jsYaml.load(content)
+  } catch (err) {
+    showFormError(err)
+    return
+  }
+  if (newLabel?.length > 0) {
+    labels.splice(idx, 1, ...newLabel)
+  }
+  removeLabel(idx)
+  updateLabelsList()
+}
+
+function removeLabel(idx) {
+  labelNames.querySelector(`[data-idx="${idx}"]`)?.remove()
+  labelConfigs.querySelector(`[data-idx="${idx}"]`)?.remove()
 }
 
 /** Clears out the labels list */
