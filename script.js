@@ -185,6 +185,7 @@ function refreshLabels() {
 //  --------------------
 
 const addButton = document.createElement('button')
+addButton.id = 'add-label-button'
 addButton.innerText = "+"
 addButton.addEventListener('click', () => { addLabel() })
 

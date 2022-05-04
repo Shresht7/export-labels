@@ -296,6 +296,21 @@ input {
   border-color: hsla(var(--label-h), calc(var(--label-s) * 1%), calc((var(--label-l) + var(--lighten-by)) * 1%), var(--border-alpha));
 }
 
+#add-label-button {
+  color: var(--clr-light-2);
+  border: 2px solid var(--clr-dark-1);
+  border-radius: 50%;
+  width: 5ch;
+  height: 5ch;
+  background-color: transparent;
+  transition: all 250ms ease-in-out;
+}
+
+#add-label-button:hover {
+  color: var(--clr-light-1);
+  border: 2px solid var(--clr-light-1);
+}
+
 /* =================== */
 /* SYNTAX HIGHLIGHTING */
 /* =================== */
