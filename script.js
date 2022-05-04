@@ -181,23 +181,31 @@ copyJSONButton.addEventListener('click', (e) => onCopy(e, 'json'))
 /** @type HTMLButtonElement */
 const toggleThemeButton = document.getElementById('theme-toggle')
 
+//  Toggle Theme Button Click Handler
 toggleThemeButton.addEventListener('click', () => {
+
   const theme = toggleThemeButton.getAttribute('data-theme')
+
   if (theme === 'light') {
+
     toggleThemeButton.setAttribute('data-theme', 'dark')
     toggleThemeButton.innerText = '☀'
+
     const labels = document.querySelectorAll('.label-name')
-    for (const label of labels) {
-      label.classList.add('dark')
-    }
+    for (const label of labels) { label.classList.add('dark') }
+
     document.body.classList.add('dark')
+
   } else {
+
     toggleThemeButton.setAttribute('data-theme', 'light')
     toggleThemeButton.innerText = '🌙'
+
     const labels = document.querySelectorAll('.label-name')
-    for (const label of labels) {
-      label.classList.remove('dark')
-    }
+    for (const label of labels) { label.classList.remove('dark') }
+
     document.body.classList.remove('dark')
+
   }
+
 })
