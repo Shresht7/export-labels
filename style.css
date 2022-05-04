@@ -262,6 +262,11 @@ input {
   height: 15ch;
 }
 
+
+.label-config {
+  width: 100%;
+}
+
 .label-name {
   --perceived-lightness: calc(((var(--label-r) * 0.2126) + (var(--label-g) * 0.7152) + (var(--label-b) * 0.0722)) / 255);
   --lightness-switch: max(0, min(calc((var(--perceived-lightness) - var(--lightness-threshold)) * -1000), 1));
@@ -319,7 +324,7 @@ input {
   gap: 1rem;
 }
 
-#copy-to-clipboard>button {
+.code-button {
   color: var(--clr-light-2);
   border: 2px solid var(--clr-dark-1);
   border-radius: 2px;
@@ -327,9 +332,16 @@ input {
   transition: all 250ms ease-in-out;
 }
 
-#copy-to-clipboard>button:hover {
+.code-button {
   color: var(--clr-light-1);
   border: 2px solid var(--clr-light-1);
+}
+
+.add-button {
+  border-radius: 50%;
+  cursor: pointer;
+  width: 4ch;
+  height: 4ch;
 }
 
 /* ============ */
