@@ -7,9 +7,9 @@ import color from 'https://cdn.skypack.dev/color'
 //  =======
 
 document.addEventListener('DOMContentLoaded', async () => {
+  showLoading(true)
   const theme = localStorage.getItem('color-theme') || 'light'
   setTheme(theme)
-  showLoading(true)
   LABELS = await fetchLabels('./data.json')
   refreshLabels()
   showLoading(false)
@@ -34,6 +34,7 @@ function showFormError(msg) {
   formError.style.transform = msg
     ? 'translateY(0)'
     : 'translateY(-50%)'
+  showLoading(false)
 }
 
 /** Handle form submit error */
@@ -171,6 +172,10 @@ function createLabelConfig(idx) {
   labelConfig.innerHTML = text
   labelConfig.classList.add('label-config')
   labelConfig.contentEditable = true
+  labelConfig.addEventListener('click', (e) => {
+    const tar = labelConfig.querySelector('.remove-label-container')
+    tar?.remove()
+  })
   labelConfig.addEventListener('blur', (e) => {
     editLabel(idx, labelConfig.innerText)
   })
