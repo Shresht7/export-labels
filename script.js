@@ -131,16 +131,16 @@ function updateLabelsList() {
 
   clearLabelsList()
 
-  for (const label in labels) {
+  for (const idx in labels) {
     const labelItem = document.createElement('div')
 
-    const [r, g, b] = color(labels[label].color).rgb().array()
-    const [h, s, l] = color(labels[label].color).hsl().array()
+    const [r, g, b] = color(labels[idx].color).rgb().array()
+    const [h, s, l] = color(labels[idx].color).hsl().array()
 
     labelItem.innerHTML = `
-    <div class='label-name-container'>
+    <div class='label-name-container' data-idx="${idx}">
     <div class='label-name' style='--label-r: ${r}; --label-g: ${g}; --label-b: ${b}; --label-h: ${h}; --label-s: ${s}; --label-l: ${l};'>
-    ${labels[label].name}
+    ${labels[idx].name}
     </div>
     </div>
     `
@@ -148,16 +148,32 @@ function updateLabelsList() {
 
     const labelConfig = document.createElement('div')
     let text = `
-      <div class='label-config-container'>
-        <pre>${jsYaml.dump([labels[label]])}</pre>
+      <div class='label-config-container' data-idx="${idx}">
+        <pre>${jsYaml.dump([labels[idx]])}</pre>
       </div>
     `
     text = text.replace(/(\w+):(\s*.+)/gim, '<span class="yaml-key">$1</span>:<span class="yaml-value">$2</span>')
     labelConfig.innerHTML = text
     labelConfig.classList.add('label-config')
+    labelConfig.contentEditable = true
+    labelConfig.addEventListener('blur', (e) => {
+      editLabel(idx, labelConfig.innerText)
+    })
     labelConfigs.appendChild(labelConfig)
 
   }
+}
+
+function editLabel(idx, content) {
+  let newLabel
+  try {
+    newLabel = jsYaml.load(content)
+  } catch (err) {
+    showFormError(err)
+    return
+  }
+  labels.splice(idx, 1, ...newLabel)
+  updateLabelsList()
 }
 
 /** Clears out the labels list */
