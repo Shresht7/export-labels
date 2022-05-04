@@ -128,6 +128,8 @@ function formatLabels(data) {
 
 const addButton = document.createElement('button')
 addButton.innerText = "+"
+addButton.classList.add('code-button')
+addButton.classList.add('add-button')
 addButton.addEventListener('click', () => { addLabel() })
 
 /** Update Labels List Element */
@@ -164,9 +166,14 @@ function updateLabelsList() {
       editLabel(idx, labelConfig.innerText)
     })
     labelConfigs.appendChild(labelConfig)
-
   }
-  labelSection.appendChild(addButton)
+  const btn = document.createElement('div')
+  btn.style.display = 'flex'
+  btn.style.width = '100%'
+  btn.style.justifyContent = 'center'
+  btn.style.alignItems = 'center'
+  btn.appendChild(addButton)
+  labelConfigs.appendChild(btn)
 }
 
 function addLabel() {
@@ -179,15 +186,29 @@ function addLabel() {
 }
 
 function editLabel(idx, content) {
-  let newLabel
+  let newLabel = []
+
+  if (!content) {
+    removeLabel(idx)
+    return
+  }
+
   try {
     newLabel = jsYaml.load(content)
   } catch (err) {
     showFormError(err)
     return
   }
-  labels.splice(idx, 1, ...newLabel)
+  if (newLabel?.length > 0) {
+    labels.splice(idx, 1, ...newLabel)
+  }
+  removeLabel(idx)
   updateLabelsList()
+}
+
+function removeLabel(idx) {
+  labelNames.querySelector(`[data-idx="${idx}"]`)?.remove()
+  labelConfigs.querySelector(`[data-idx="${idx}"]`)?.remove()
 }
 
 /** Clears out the labels list */
