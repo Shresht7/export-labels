@@ -158,6 +158,7 @@ function createLabelConfig(idx) {
   let text = `
     <div class='label-config-container' data-idx="${idx}">
       <pre>${jsYaml.dump([LABELS[idx]])}</pre>
+      <button class="label-config-close" data-idx="${idx}">X</button>
     </div>
   `
   text = text.replace(/(\w+):(\s*.+)/gim, '<span class="yaml-key">$1</span>:<span class="yaml-value">$2</span>')
@@ -166,6 +167,11 @@ function createLabelConfig(idx) {
   labelConfig.contentEditable = true
   labelConfig.addEventListener('blur', (e) => {
     editLabel(idx, labelConfig.innerText)
+  })
+  labelConfig.querySelector('.label-config-close')?.addEventListener('click', (e) => {
+    LABELS.splice(idx, 1)
+    removeLabel(e.target.getAttribute('data-idx'))
+    refreshLabels()
   })
   labelConfigs.appendChild(labelConfig)
 }
