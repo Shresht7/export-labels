@@ -2,12 +2,20 @@
 import jsYaml from 'https://cdn.skypack.dev/js-yaml'
 import color from 'https://cdn.skypack.dev/color'
 
-//  ============
-//  DOM ELEMENTS
-//  ============
+//  =======
+//  ON LOAD
+//  =======
 
+document.addEventListener('DOMContentLoaded', async () => {
+  showLoading(true)
+  labels = await fetchLabels('./data.json')
+  updateLabelsList()
+  showLoading(false)
+})
+
+//  ====
 //  FORM
-//  ----
+//  ====
 
 /** @type HTMLFormElement */
 const formElement = document.getElementById('form')
@@ -17,71 +25,6 @@ const userInput = document.getElementById('user')
 const repoInput = document.getElementById('repo')
 /** @type HTMLParagraphElement */
 const formError = document.getElementById('form-error')
-
-//  LABELS
-//  ------
-
-/** @type HTMLSectionElement */
-const labelSection = document.getElementById('labels')
-/** @type HTMLDivElement */
-const labelNames = document.getElementById('label-names')
-/** @type HTMLDivElement */
-const labelConfigs = document.getElementById('label-configs')
-
-//  COPY
-//  ----
-
-/** @type HTMLButtonElement */
-const copyYAMLButton = document.getElementById('copy-yaml')
-/** @type HTMLButtonElement */
-const copyJSONButton = document.getElementById('copy-json')
-
-//  MISCELLANEOUS
-//  -------------
-
-/** @type HTMLSectionElement */
-const loadingSection = document.querySelector('.loading')
-
-//  ================
-//  HELPER FUNCTIONS
-//  ================
-
-/** Shows/hides the loading spinner */
-async function showLoading(state) {
-  if (state) {
-    labelSection.style.display = 'none'
-    loadingSection.style.display = 'grid'
-  } else {
-    labelSection.style.display = 'grid'
-    loadingSection.style.display = 'none'
-  }
-}
-
-/** Fetch and format label data */
-async function fetchLabels(src) {
-  const labels = await fetch(src)
-    .then(res => res.json())
-    .then(data => formatLabels(data))
-    .catch(err => console.error(err))
-  return labels
-}
-
-//  =======
-//  ON LOAD
-//  =======
-
-document.addEventListener('DOMContentLoaded', async () => {
-  showLoading(true)
-
-  labels = await fetchLabels('./data.json')
-  updateLabelsList()
-
-  showLoading(false)
-})
-
-//  ====
-//  FORM
-//  ====
 
 /** Shows error on the form-input */
 function showFormError(msg) {
@@ -93,19 +36,23 @@ function showFormError(msg) {
 
 /** Handle form submit error */
 async function handleSubmit(event) {
-  event.preventDefault()
-  showLoading(true)
 
+  event.preventDefault()  //  Prevent default form submit behaviour (e.g. refreshing the page)
+  showLoading(true) //  Show the loading spinner
+
+  //  Validate input
   if (!userInput.value || !repoInput.value) {
     showFormError('Please provide the username and repository information')
     return
   }
   showFormError('')
 
+  //  Fetch and update labels list
   labels = await fetchLabels(`https://api.github.com/repos/${userInput.value}/${repoInput.value}/labels`)
   updateLabelsList()
 
-  showLoading(false)
+  showLoading(false)  //  Un-show loading spinner
+
 }
 
 formElement.addEventListener('submit', handleSubmit)
@@ -116,6 +63,13 @@ formElement.addEventListener('reset', () => showFormError(''))
 //  ===========
 
 let labels = []
+
+/** @type HTMLSectionElement */
+const labelSection = document.getElementById('labels')
+/** @type HTMLDivElement */
+const labelNames = document.getElementById('label-names')
+/** @type HTMLDivElement */
+const labelConfigs = document.getElementById('label-configs')
 
 /** Format incoming label data */
 function formatLabels(data) {
@@ -220,19 +174,29 @@ function clearLabelsList() {
 // COPY
 // ====
 
+/** @type HTMLButtonElement */
+const copyYAMLButton = document.getElementById('copy-yaml')
+/** @type HTMLButtonElement */
+const copyJSONButton = document.getElementById('copy-json')
+
 /** onCopy Button Click Handler */
-function onCopy(e, type) {
+function onCopy(type) {
+
+  //  Determine the text to copy from the button type
   const text = type === 'yaml'
     ? jsYaml.dump(labels)
     : JSON.stringify(labels, null, 2)
 
+  //  Write text to clipboard
   navigator.clipboard.writeText(text)
 
+  //  Give user some visual feedback
   document.getElementById('copy-to-clipboard').innerText = `Copied as ${type.toUpperCase()} ✅`
+
 }
 
-copyYAMLButton.addEventListener('click', (e) => onCopy(e, 'yaml'))
-copyJSONButton.addEventListener('click', (e) => onCopy(e, 'json'))
+copyYAMLButton.addEventListener('click', () => onCopy('yaml'))
+copyJSONButton.addEventListener('click', () => onCopy('json'))
 
 //  ============
 //  THEME TOGGLE
@@ -244,28 +208,68 @@ const toggleThemeButton = document.getElementById('theme-toggle')
 //  Toggle Theme Button Click Handler
 toggleThemeButton.addEventListener('click', () => {
 
+  //  Get current theme attribute
   const theme = toggleThemeButton.getAttribute('data-theme')
 
   if (theme === 'light') {
 
+    //  Update theme attribute and toggle-button text
     toggleThemeButton.setAttribute('data-theme', 'dark')
     toggleThemeButton.innerText = '☀'
 
+    //  Add dark class to all labels
     const labels = document.querySelectorAll('.label-name')
     for (const label of labels) { label.classList.add('dark') }
 
+    //  Add dark class to body
     document.body.classList.add('dark')
 
   } else {
 
+    //  Update theme attribute and toggle-button text
     toggleThemeButton.setAttribute('data-theme', 'light')
     toggleThemeButton.innerText = '🌙'
 
+    //  Remove dark class from all labels
     const labels = document.querySelectorAll('.label-name')
     for (const label of labels) { label.classList.remove('dark') }
 
+    //  Remove dark class from body
     document.body.classList.remove('dark')
 
   }
 
 })
+
+//  ================
+//  HELPER FUNCTIONS
+//  ================
+
+//  LOADING SPINNER
+//  ---------------
+
+/** @type HTMLSectionElement */
+const loadingSection = document.querySelector('.loading')
+
+/** Shows/hides the loading spinner */
+async function showLoading(state) {
+  if (state) {
+    labelSection.style.display = 'none'
+    loadingSection.style.display = 'grid'
+  } else {
+    labelSection.style.display = 'grid'
+    loadingSection.style.display = 'none'
+  }
+}
+
+//  MISCELLANEOUS
+//  -------------
+
+/** Fetch and format label data */
+async function fetchLabels(src) {
+  const labels = await fetch(src)
+    .then(res => res.json())
+    .then(data => formatLabels(data))
+    .catch(err => console.error(err))
+  return labels
+}
