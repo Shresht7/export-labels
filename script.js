@@ -158,7 +158,9 @@ function createLabelConfig(idx) {
   let text = `
     <div class='label-config-container' data-idx="${idx}">
       <pre>${jsYaml.dump([LABELS[idx]])}</pre>
-      <button class="label-config-close" data-idx="${idx}">X</button>
+      <div class='remove-label-container'>
+      <button class="label-config-close" data-idx="${idx}">❌</button>
+      </div>
     </div>
   `
   text = text.replace(/(\w+):(\s*.+)/gim, '<span class="yaml-key">$1</span>:<span class="yaml-value">$2</span>')

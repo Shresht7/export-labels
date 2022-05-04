@@ -256,6 +256,14 @@ input {
   align-items: center;
 }
 
+.label-config-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 .label-name-container,
 .label-config-container {
   padding: 1rem 2rem;
@@ -309,6 +317,39 @@ input {
 #add-label-button:hover {
   color: var(--clr-light-1);
   border: 2px solid var(--clr-light-1);
+}
+
+.remove-label-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+}
+
+.remove-label-container:hover {
+  opacity: 1;
+}
+
+.label-config-close {
+  margin-right: 2em;
+  color: var(--clr-light-2);
+  border: 2px solid var(--clr-dark-1);
+  border-radius: 50%;
+  width: 5ch;
+  height: 5ch;
+  background-color: transparent;
+  transition: all 250ms ease-in-out;
+}
+
+.label-config-close:hover {
+  color: var(--clr-light-1);
+  border: 2px solid var(--clr-gradient-2);
 }
 
 /* =================== */
