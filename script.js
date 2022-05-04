@@ -7,7 +7,7 @@ import color from 'https://cdn.skypack.dev/color'
 //  ============
 
 //  FORM
-//  ====
+//  ----
 
 /** @type HTMLFormElement */
 const formElement = document.getElementById('form')
@@ -19,7 +19,7 @@ const repoInput = document.getElementById('repo')
 const formError = document.getElementById('form-error')
 
 //  LABELS
-//  ======
+//  ------
 
 /** @type HTMLSectionElement */
 const labelSection = document.getElementById('labels')
@@ -29,7 +29,7 @@ const labelNames = document.getElementById('label-names')
 const labelConfigs = document.getElementById('label-configs')
 
 //  COPY
-//  ====
+//  ----
 
 /** @type HTMLButtonElement */
 const copyYAMLButton = document.getElementById('copy-yaml')
@@ -72,8 +72,10 @@ async function fetchLabels(src) {
 
 document.addEventListener('DOMContentLoaded', async () => {
   showLoading(true)
+
   labels = await fetchLabels('./data.json')
   updateLabelsList()
+
   showLoading(false)
 })
 
@@ -93,13 +95,16 @@ function showFormError(msg) {
 async function handleSubmit(event) {
   event.preventDefault()
   showLoading(true)
+
   if (!userInput.value || !repoInput.value) {
     showFormError('Please provide the username and repository information')
     return
   }
   showFormError('')
+
   labels = await fetchLabels(`https://api.github.com/repos/${userInput.value}/${repoInput.value}/labels`)
   updateLabelsList()
+
   showLoading(false)
 }
 
@@ -123,11 +128,15 @@ function formatLabels(data) {
 
 /** Update Labels List Element */
 function updateLabelsList() {
+
   clearLabelsList()
+
   for (const label in labels) {
     const labelItem = document.createElement('div')
+
     const [r, g, b] = color(labels[label].color).rgb().array()
     const [h, s, l] = color(labels[label].color).hsl().array()
+
     labelItem.innerHTML = `
     <div class='label-name-container'>
     <div class='label-name' style='--label-r: ${r}; --label-g: ${g}; --label-b: ${b}; --label-h: ${h}; --label-s: ${s}; --label-l: ${l};'>
@@ -167,7 +176,9 @@ function onCopy(e, type) {
   const text = type === 'yaml'
     ? jsYaml.dump(labels)
     : JSON.stringify(labels, null, 2)
+
   navigator.clipboard.writeText(text)
+
   document.getElementById('copy-to-clipboard').innerText = `Copied as ${type.toUpperCase()} ✅`
 }
 
