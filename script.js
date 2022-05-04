@@ -126,6 +126,10 @@ function formatLabels(data) {
   }))
 }
 
+const addButton = document.createElement('button')
+addButton.innerText = "+"
+addButton.addEventListener('click', () => { addLabel() })
+
 /** Update Labels List Element */
 function updateLabelsList() {
 
@@ -162,6 +166,16 @@ function updateLabelsList() {
     labelConfigs.appendChild(labelConfig)
 
   }
+  labelSection.appendChild(addButton)
+}
+
+function addLabel() {
+  labels.push({
+    name: 'label',
+    color: '#000000',
+    description: 'A new label'
+  })
+  updateLabelsList()
 }
 
 function editLabel(idx, content) {
