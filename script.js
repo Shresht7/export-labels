@@ -123,8 +123,7 @@ function formatLabels(data) {
 
 /** Update Labels List Element */
 function updateLabelsList() {
-  labelNames.innerHTML = ''
-  labelConfigs.innerHTML = ''
+  clearLabelsList()
   for (const label in labels) {
     const labelItem = document.createElement('div')
     const [r, g, b] = color(labels[label].color).rgb().array()
@@ -151,6 +150,13 @@ function updateLabelsList() {
 
   }
 }
+
+/** Clears out the labels list */
+function clearLabelsList() {
+  labelNames.innerHTML = ''
+  labelConfigs.innerHTML = ''
+}
+
 
 // ====
 // COPY
