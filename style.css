@@ -324,7 +324,7 @@ input {
   gap: 1rem;
 }
 
-.code-button {
+#copy-to-clipboard>button {
   color: var(--clr-light-2);
   border: 2px solid var(--clr-dark-1);
   border-radius: 2px;
@@ -332,16 +332,9 @@ input {
   transition: all 250ms ease-in-out;
 }
 
-.code-button {
+#copy-to-clipboard>button:hover {
   color: var(--clr-light-1);
   border: 2px solid var(--clr-light-1);
-}
-
-.add-button {
-  border-radius: 50%;
-  cursor: pointer;
-  width: 4ch;
-  height: 4ch;
 }
 
 /* ============ */

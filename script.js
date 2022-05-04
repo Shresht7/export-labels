@@ -128,8 +128,6 @@ function formatLabels(data) {
 
 const addButton = document.createElement('button')
 addButton.innerText = "+"
-addButton.classList.add('code-button')
-addButton.classList.add('add-button')
 addButton.addEventListener('click', () => { addLabel() })
 
 /** Update Labels List Element */
