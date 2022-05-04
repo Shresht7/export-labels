@@ -8,8 +8,8 @@ import color from 'https://cdn.skypack.dev/color'
 
 document.addEventListener('DOMContentLoaded', async () => {
   showLoading(true)
-  labels = await fetchLabels('./data.json')
-  updateLabelsList()
+  LABELS = await fetchLabels('./data.json')
+  refreshLabels()
   showLoading(false)
 })
 
@@ -48,8 +48,8 @@ async function handleSubmit(event) {
   showFormError('')
 
   //  Fetch and update labels list
-  labels = await fetchLabels(`https://api.github.com/repos/${userInput.value}/${repoInput.value}/labels`)
-  updateLabelsList()
+  LABELS = await fetchLabels(`https://api.github.com/repos/${userInput.value}/${repoInput.value}/labels`)
+  refreshLabels()
 
   showLoading(false)  //  Un-show loading spinner
 
@@ -58,11 +58,15 @@ async function handleSubmit(event) {
 formElement.addEventListener('submit', handleSubmit)
 formElement.addEventListener('reset', () => showFormError(''))
 
-//  ===========
-// LABELS STATE
-//  ===========
+//  ============
+//  LABELS STATE
+//  ============
 
-let labels = []
+/**
+ * Array of label entries
+ * @type { { name: string, color: string. description: string }[] }
+ */
+let LABELS = []
 
 /** @type HTMLSectionElement */
 const labelSection = document.getElementById('labels')
@@ -80,45 +84,112 @@ function formatLabels(data) {
   }))
 }
 
+/** Clears out the labels list */
+function clearLabels() {
+  labelNames.innerHTML = ''
+  labelConfigs.innerHTML = ''
+}
+
+/** Creates a new label */
+function addLabel() {
+  LABELS.push({
+    name: 'label',
+    color: '#000000',
+    description: 'A new label'
+  })
+  refreshLabels()
+}
+
+/** Edit the label with the given index and content */
+function editLabel(idx, content) {
+
+  //  If no content, remove label
+  if (!content) {
+    removeLabel(idx)
+    return
+  }
+
+  //  Try to parse yaml and read new label
+  let newLabel = []
+  try {
+    newLabel = jsYaml.load(content)
+  } catch (err) {
+    showFormError(err.message)
+    return
+  }
+
+  // If successful, remove the original label and replace with the new one 
+  if (newLabel?.length > 0) {
+    LABELS.splice(idx, 1, ...newLabel)
+  }
+  removeLabel(idx)  //  Remove label from the UI as well
+  refreshLabels()  //  Update labels UI
+
+}
+
+/** Removes label with the given index */
+function removeLabel(idx) {
+  labelNames.querySelector(`[data-idx="${idx}"]`)?.remove()
+  labelConfigs.querySelector(`[data-idx="${idx}"]`)?.remove()
+}
+
+//  ----------------
+//  UPDATE LABELS UI
+//  ----------------
+
+function createLabelName(idx) {
+  const labelItem = document.createElement('div')
+
+  const [r, g, b] = color(LABELS[idx].color).rgb().array()
+  const [h, s, l] = color(LABELS[idx].color).hsl().array()
+
+  labelItem.innerHTML = `
+    <div class='label-name-container' data-idx="${idx}">
+    <div class='label-name' style='--label-r: ${r}; --label-g: ${g}; --label-b: ${b}; --label-h: ${h}; --label-s: ${s}; --label-l: ${l};'>
+    ${LABELS[idx].name}
+    </div>
+    </div>
+    `
+  labelNames.appendChild(labelItem)
+}
+
+function createLabelConfig(idx) {
+  const labelConfig = document.createElement('div')
+  let text = `
+    <div class='label-config-container' data-idx="${idx}">
+      <pre>${jsYaml.dump([LABELS[idx]])}</pre>
+    </div>
+  `
+  text = text.replace(/(\w+):(\s*.+)/gim, '<span class="yaml-key">$1</span>:<span class="yaml-value">$2</span>')
+  labelConfig.innerHTML = text
+  labelConfig.classList.add('label-config')
+  labelConfig.contentEditable = true
+  labelConfig.addEventListener('blur', (e) => {
+    editLabel(idx, labelConfig.innerText)
+  })
+  labelConfigs.appendChild(labelConfig)
+}
+
+/** Update Labels List Element */
+function refreshLabels() {
+  clearLabels()
+  for (const idx in LABELS) {
+    createLabelName(idx)
+    createLabelConfig(idx)
+  }
+  createAddLabelButton()
+}
+
+//  --------------------
+//  Add New Label Button
+//  --------------------
+
 const addButton = document.createElement('button')
 addButton.innerText = "+"
 addButton.addEventListener('click', () => { addLabel() })
 
-/** Update Labels List Element */
-function updateLabelsList() {
-
-  clearLabelsList()
-
-  for (const idx in labels) {
-    const labelItem = document.createElement('div')
-
-    const [r, g, b] = color(labels[idx].color).rgb().array()
-    const [h, s, l] = color(labels[idx].color).hsl().array()
-
-    labelItem.innerHTML = `
-    <div class='label-name-container' data-idx="${idx}">
-    <div class='label-name' style='--label-r: ${r}; --label-g: ${g}; --label-b: ${b}; --label-h: ${h}; --label-s: ${s}; --label-l: ${l};'>
-    ${labels[idx].name}
-    </div>
-    </div>
-    `
-    labelNames.appendChild(labelItem)
-
-    const labelConfig = document.createElement('div')
-    let text = `
-      <div class='label-config-container' data-idx="${idx}">
-        <pre>${jsYaml.dump([labels[idx]])}</pre>
-      </div>
-    `
-    text = text.replace(/(\w+):(\s*.+)/gim, '<span class="yaml-key">$1</span>:<span class="yaml-value">$2</span>')
-    labelConfig.innerHTML = text
-    labelConfig.classList.add('label-config')
-    labelConfig.contentEditable = true
-    labelConfig.addEventListener('blur', (e) => {
-      editLabel(idx, labelConfig.innerText)
-    })
-    labelConfigs.appendChild(labelConfig)
-  }
+/** Create AddLabelButton and append at the end of LabelConfigs */
+function createAddLabelButton() {
   const btn = document.createElement('div')
   btn.style.display = 'flex'
   btn.style.width = '100%'
@@ -127,48 +198,6 @@ function updateLabelsList() {
   btn.appendChild(addButton)
   labelConfigs.appendChild(btn)
 }
-
-function addLabel() {
-  labels.push({
-    name: 'label',
-    color: '#000000',
-    description: 'A new label'
-  })
-  updateLabelsList()
-}
-
-function editLabel(idx, content) {
-  let newLabel = []
-
-  if (!content) {
-    removeLabel(idx)
-    return
-  }
-
-  try {
-    newLabel = jsYaml.load(content)
-  } catch (err) {
-    showFormError(err)
-    return
-  }
-  if (newLabel?.length > 0) {
-    labels.splice(idx, 1, ...newLabel)
-  }
-  removeLabel(idx)
-  updateLabelsList()
-}
-
-function removeLabel(idx) {
-  labelNames.querySelector(`[data-idx="${idx}"]`)?.remove()
-  labelConfigs.querySelector(`[data-idx="${idx}"]`)?.remove()
-}
-
-/** Clears out the labels list */
-function clearLabelsList() {
-  labelNames.innerHTML = ''
-  labelConfigs.innerHTML = ''
-}
-
 
 // ====
 // COPY
@@ -184,8 +213,8 @@ function onCopy(type) {
 
   //  Determine the text to copy from the button type
   const text = type === 'yaml'
-    ? jsYaml.dump(labels)
-    : JSON.stringify(labels, null, 2)
+    ? jsYaml.dump(LABELS)
+    : JSON.stringify(LABELS, null, 2)
 
   //  Write text to clipboard
   navigator.clipboard.writeText(text)
