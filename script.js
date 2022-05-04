@@ -7,6 +7,8 @@ import color from 'https://cdn.skypack.dev/color'
 //  =======
 
 document.addEventListener('DOMContentLoaded', async () => {
+  const theme = localStorage.getItem('color-theme') || 'light'
+  setTheme(theme)
   showLoading(true)
   LABELS = await fetchLabels('./data.json')
   refreshLabels()
@@ -143,9 +145,11 @@ function createLabelName(idx) {
   const [r, g, b] = color(LABELS[idx].color).rgb().array()
   const [h, s, l] = color(LABELS[idx].color).hsl().array()
 
+  const theme = toggleThemeButton.getAttribute('data-theme')
+
   labelItem.innerHTML = `
     <div class='label-name-container' data-idx="${idx}">
-    <div class='label-name' style='--label-r: ${r}; --label-g: ${g}; --label-b: ${b}; --label-h: ${h}; --label-s: ${s}; --label-l: ${l};'>
+    <div class='label-name${theme === 'dark' ? ' dark' : ''}' style='--label-r: ${r}; --label-g: ${g}; --label-b: ${b}; --label-h: ${h}; --label-s: ${s}; --label-l: ${l};'>
     ${LABELS[idx].name}
     </div>
     </div>
@@ -243,12 +247,7 @@ copyJSONButton.addEventListener('click', () => onCopy('json'))
 /** @type HTMLButtonElement */
 const toggleThemeButton = document.getElementById('theme-toggle')
 
-//  Toggle Theme Button Click Handler
-toggleThemeButton.addEventListener('click', () => {
-
-  //  Get current theme attribute
-  const theme = toggleThemeButton.getAttribute('data-theme')
-
+function setTheme(theme) {
   if (theme === 'light') {
 
     //  Update theme attribute and toggle-button text
@@ -276,7 +275,13 @@ toggleThemeButton.addEventListener('click', () => {
     document.body.classList.remove('dark')
 
   }
+}
 
+//  Toggle Theme Button Click Handler
+toggleThemeButton.addEventListener('click', () => {
+  const theme = toggleThemeButton.getAttribute('data-theme')
+  setTheme(theme)
+  localStorage.setItem('color-theme', theme)
 })
 
 //  ================
