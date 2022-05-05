@@ -164,7 +164,7 @@ function createLabelConfig(idx) {
     <div class='label-config-container' data-idx="${idx}">
       <pre>${jsYaml.dump([LABELS[idx]])}</pre>
       <div class='remove-label-container'>
-      <button class="label-config-close" data-idx="${idx}">❌</button>
+      <button class="label-config-close btn btn-round" data-idx="${idx}">❌</button>
       </div>
     </div>
   `
@@ -204,6 +204,7 @@ function refreshLabels() {
 const addButton = document.createElement('button')
 addButton.id = 'add-label-button'
 addButton.innerText = "+"
+addButton.classList.add('btn', 'btn-round')
 addButton.addEventListener('click', () => { addLabel() })
 
 /** Create AddLabelButton and append at the end of LabelConfigs */
