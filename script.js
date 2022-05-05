@@ -118,8 +118,10 @@ function editLabel(idx, content) {
     newLabel = jsYaml.load(content)
   } catch (err) {
     showFormError(err.message)
+    labelConfigs.querySelector(`[data-idx="${idx}"]`)?.classList.add('yaml-error')
     return
   }
+  labelConfigs.querySelector(`[data-idx="${idx}"]`)?.classList.remove('yaml-error')
 
   // If successful, remove the original label and replace with the new one 
   if (newLabel?.length > 0) {

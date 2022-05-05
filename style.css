@@ -40,6 +40,7 @@ select {
   --clr-purple: rgba(131, 58, 180, 1);
   --clr-red: rgba(253, 29, 29, 1);
   --clr-yellow: rgba(252, 176, 69, 1);
+  --clr-error: rgb(171, 77, 77, 1);
 
   --clr-background: var(--clr-light-1);
   --clr-foreground: var(--clr-dark-2);
@@ -118,7 +119,7 @@ button {
 /* ======= */
 
 .error {
-  color: var(--clr-red);
+  color: var(--clr-error);
 }
 
 .loading {
@@ -374,6 +375,10 @@ body.dark form button:hover {
 
 .label-config {
   width: 100%;
+}
+
+.yaml-error {
+  background-color: var(--clr-error);
 }
 
 .remove-label-container {
