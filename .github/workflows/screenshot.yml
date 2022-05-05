@@ -37,7 +37,6 @@ jobs:
         with:
           url: https://shresht7.github.io/export-labels/
           path: screenshot.png
-          darkMode: true
 
       # Push to Main 🌐
       # ===============
